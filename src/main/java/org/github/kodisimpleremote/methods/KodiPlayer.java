@@ -68,4 +68,13 @@ public class KodiPlayer {
 			addParam("properties", props);
 		}
 	}
+	
+	public static class GetActivePlayers extends KodiJsonRpc{
+		public static final String PLAYER_GETACTIVEPLAYERS = "Player.GetActivePlayers";
+		
+		public GetActivePlayers(){
+			super(PLAYER_GETACTIVEPLAYERS);
+			addProperty("id", 1);
+		}
+	}
 }

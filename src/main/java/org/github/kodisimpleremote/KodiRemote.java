@@ -1,6 +1,7 @@
 package org.github.kodisimpleremote;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -16,8 +17,10 @@ import org.github.kodisimpleremote.methods.KodiJsonRpc;
 import org.github.kodisimpleremote.methods.KodiPlayer;
 import org.github.kodisimpleremote.methods.KodiPlayer.PlayerOpenType;
 import org.github.kodisimpleremote.methods.Xbmc;
+import org.github.kodisimpleremote.responses.KodiActivePlayers;
 import org.github.kodisimpleremote.responses.KodiInfoLabels;
 import org.github.kodisimpleremote.responses.KodiJsonRpcVersion;
+import org.github.kodisimpleremote.responses.PlayerInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -177,6 +180,20 @@ public class KodiRemote {
 		String content = response.getContentAsString();
 		return KodiInfoLabels.fromJson(content);
 	}
+	
+	/**
+	 * Gets the active players.<br>
+	 * <br>
+	 * Json Response looks like following:<br>
+	 * {"id": 1, "jsonrpc": "2.0", "result": [ { "playerid": 0, "type": "audio" } ]}
+	 * @return
+	 */
+	public List<PlayerInfo> getActivePlayers(){
+		KodiPlayer.GetActivePlayers getPlayers = new KodiPlayer.GetActivePlayers();
+		ContentResponse response = postKodiJsonRpc(getPlayers);
+		String content = response.getContentAsString();
+		return KodiActivePlayers.fromJson(content).getResult();		
+	} 
 
 	/**
 	 * Stop this Client
