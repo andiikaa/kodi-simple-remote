@@ -4,7 +4,7 @@ A simple remote for accessing the media center kodi (http://kodi.wiki/) via json
 ## Examples
 
 ```java
-//new remote with uses the default authentication
+//new remote uses the default authentication
 KodiRemote remote = new KodiRemote("http://192.168.2.103:8080");
 
 //get version info
