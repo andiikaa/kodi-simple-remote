@@ -22,5 +22,10 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-  <description>Simple remote app written in java to accessing kodi via json rpc (e.g. play some file, show a picture, ...)</description>
+  <description>Simple remote library written in java to access kodi via json rpc (e.g. play some file, show a picture, ...)</description>
+  <scm>
+  	<url>git@github.com:andiikaa/kodi-simple-remote.git</url>
+  	<connection>scm:git:git@github.com:andiikaa/kodi-simple-remote.git</connection>
+  	<developerConnection>scm:git:git@github.com:andiikaa/kodi-simple-remote.git</developerConnection>
+  </scm>
 </project>
