@@ -39,6 +39,7 @@ public class KodiRemote {
 	public static final String MEDIA_TYPE_JSON = "application/json";
 
 	private static final Logger logger = LoggerFactory.getLogger(KodiRemote.class);
+	private static final String AUTH_HEADER = "Authorization";
 
 	// Default authentication
 	private static final String defaultAuth = "kodi:kodi";
@@ -47,6 +48,7 @@ public class KodiRemote {
 	private final String auth;
 	private final String serverBaseUri;
 	private final String creds;
+	private final String basicCreds;
 
 	private HttpClient client;
 
@@ -77,6 +79,7 @@ public class KodiRemote {
 		client = new HttpClient();
 		byte[] out = Base64.getEncoder().encode(auth.getBytes());
 		creds = new String(out);
+		basicCreds = "Basic ".concat(creds);
 		client.start();
 	}
 
@@ -125,7 +128,7 @@ public class KodiRemote {
 		ContentResponse response = null;
 
 		try {
-			response = client.POST(serverBaseUri).path(jsonRpc).header("Authorization", "Basic ".concat(creds))
+			response = client.POST(serverBaseUri).path(jsonRpc).header(AUTH_HEADER, basicCreds)
 					.content(content, MEDIA_TYPE_JSON).send();
 		} catch (InterruptedException | TimeoutException | ExecutionException e) {
 			e.printStackTrace();
@@ -145,7 +148,7 @@ public class KodiRemote {
 		logger.debug("JSON-RPC: {}", kodiJsonRpc.getAsJsonString());
 		ContentProvider content = new StringContentProvider(kodiJsonRpc.getAsJsonString());
 
-		client.POST(serverBaseUri).path(jsonRpc).header("Authorization", "Basic ".concat(creds))
+		client.POST(serverBaseUri).path(jsonRpc).header("Authorization", basicCreds)
 				.content(content, MEDIA_TYPE_JSON).send(new CompleteListener() {
 					@Override
 					public void onComplete(Result result) {

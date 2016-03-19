@@ -11,7 +11,7 @@ public class KodiPlayerProperties {
 
 	}
 
-	public String getPropertieValue(String propertyName) {
+	public String getPropertyValue(String propertyName) {
 		JsonElement info = result.get(propertyName);
 		if (info == null)
 			return null;
